@@ -1,54 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Beauty of Geomorphology: video learning and research-based explanations of Earth's landforms and processes.">
-<title>Beauty of Geomorphology</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Beauty of Geomorphology — explore landforms, surface processes, videos, books and research resources.">
+  <title>Beauty of Geomorphology | Explore Earth's Landscapes</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="#home"><span class="logo">🌍</span><span><b>Beauty of Geomorphology</b><small>Learn · Explore · Understand</small></span></a>
-  <button class="menu" id="menuBtn" aria-label="Open menu">☰</button>
-  <nav id="nav"><a href="#learn">Learn</a><a href="#videos">Videos</a><a href="#chat">Research Chatbot</a><a href="#about">About</a></nav>
-</header>
-<main>
-<section class="hero" id="home">
-  <div class="hero-copy">
-    <p class="eyebrow">EXPLORE THE SHAPE OF OUR PLANET</p>
-    <h1>Understand Earth.<br><em>One landform at a time.</em></h1>
-    <p>Learn how rivers, glaciers, wind, waves and tectonic forces shape the landscapes around us. A focused learning space for geomorphology students.</p>
-    <div class="actions"><a class="btn primary" href="#learn">Explore topics ↗</a><a class="btn secondary" href="#chat">Ask a question</a></div>
-    <div class="note">✦ Learning resources for curious minds</div>
-  </div>
-  <div class="landscape" aria-label="Illustrated mountain and river landscape"><div class="sun"></div><div class="peak p1"></div><div class="peak p2"></div><div class="peak p3"></div><div class="river"></div><div class="land-label">LANDSCAPES<br><b>IN MOTION</b></div></div>
-</section>
-<section class="topic-section section" id="learn">
-  <div class="section-head"><div><p class="eyebrow">THE LEARNING HUB</p><h2>Explore geomorphology</h2></div><p>Choose a topic and build your understanding from fundamental processes to distinctive landforms.</p></div>
-  <div class="topics">
-    <article class="topic"><span class="topic-icon">〰️</span><p class="tag">RUNNING WATER</p><h3>Fluvial Geomorphology</h3><p>River erosion, transportation, deposition, meanders, floodplains and deltas.</p><a href="#videos">Explore lessons →</a></article>
-    <article class="topic"><span class="topic-icon">🏔️</span><p class="tag">ICE & LAND</p><h3>Glacial Geomorphology</h3><p>Glaciers, cirques, U-shaped valleys, moraines and glacial processes.</p><a href="#videos">Explore lessons →</a></article>
-    <article class="topic"><span class="topic-icon">🌬️</span><p class="tag">WIND & DRYLANDS</p><h3>Aeolian Geomorphology</h3><p>Wind erosion, deflation, yardangs, dunes and desert landscapes.</p><a href="#videos">Explore lessons →</a></article>
-    <article class="topic"><span class="topic-icon">🌊</span><p class="tag">COASTAL SYSTEMS</p><h3>Coastal Geomorphology</h3><p>Waves, longshore drift, cliffs, beaches, spits and coastal change.</p><a href="#videos">Explore lessons →</a></article>
-    <article class="topic"><span class="topic-icon">🪨</span><p class="tag">ROCK & RELIEF</p><h3>Weathering & Mass Movement</h3><p>Physical and chemical weathering, slope processes, landslides and soil creep.</p><a href="#videos">Explore lessons →</a></article>
-    <article class="topic"><span class="topic-icon">🌋</span><p class="tag">EARTH FORCES</p><h3>Tectonic & Volcanic Landforms</h3><p>Faults, folds, uplift, volcanic cones and the influence of structure on relief.</p><a href="#videos">Explore lessons →</a></article>
-  </div>
-</section>
-<section class="video-section section" id="videos">
-  <div class="section-head"><div><p class="eyebrow">WATCH & LEARN</p><h2>Geomorphology video library</h2></div><p>Use this area for video classes, field demonstrations and topic playlists.</p></div>
-  <div class="video-card"><div class="video-placeholder"><span class="play">▶</span><small>VIDEO LESSONS</small></div><div class="video-text"><p class="tag">START HERE</p><h3>How are landforms created?</h3><p>Begin with the main geomorphic processes: weathering, erosion, transportation, deposition and tectonic activity.</p><p class="muted">Video lessons will be added here. To embed a YouTube lesson, use Share → Embed and add the supplied iframe to this section.</p><a class="text-link" href="https://www.youtube.com/results?search_query=introduction+to+geomorphology" target="_blank" rel="noopener">Find introductory videos on YouTube ↗</a></div></div>
-</section>
-<section class="chat-section section" id="chat">
-  <div class="section-head"><div><p class="eyebrow">ASK · EXPLORE · VERIFY</p><h2>AI research chatbot</h2></div><p>Ask a geomorphology question and explore source-backed learning. This first version includes a source-search demo; live AI answers need a backend connection.</p></div>
-  <div class="chat-layout">
-    <div class="chat-intro"><div class="chat-badge">✦ Research assistant</div><h3>Curiosity is the start of discovery.</h3><p>Ask about a landform, a geomorphic process or a geography concept. We'll help you find starting points for further reading.</p><div class="source-list"><span>Wikipedia</span><span>Semantic Scholar</span><span>Crossref</span></div><p class="muted small">Sources are starting points, not a substitute for checking the original paper. Search results may not directly support every claim.</p></div>
-    <div class="chatbox"><div class="chat-head"><span class="status-dot"></span><div><b>Geomorphology Research Chat</b><small>Source finder · Demo mode</small></div></div><div id="messages" class="messages"><div class="message bot">Hello! Ask me about a geomorphology topic. I'll provide links to relevant source searches.</div></div><form id="chatForm" class="chat-form"><input id="question" placeholder="e.g. How do oxbow lakes form?" maxlength="500" required><button aria-label="Send question">➤</button></form><p class="chat-disclaimer">Demo only: this does not yet generate AI answers. No API key is needed for this source-search prototype.</p></div>
-  </div>
-</section>
-<section class="about section" id="about"><div><p class="eyebrow">OUR PURPOSE</p><h2>Learn the science behind the scenery.</h2></div><p><b>Beauty of Geomorphology</b> is a student-focused learning project dedicated to Earth's landforms, surface processes, videos and research resources. This starter site is ready to expand with lessons, quizzes, citations and a secure AI backend.</p></section>
-</main>
-<footer><a class="brand" href="#home"><span class="logo">🌍</span><span><b>Beauty of Geomorphology</b><small>Learn · Explore · Understand</small></span></a><p>© <span id="year"></span> Beauty of Geomorphology</p><a href="#home">Back to top ↑</a></footer>
-<script src="script.js"></script>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">B<span>G</span></span><span>Beauty of <strong>Geomorphology</strong></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    <nav id="mainNav">
+      <a href="#topics">Explore Topics</a><a href="#about">About</a><a href="#learning">Learning Resources</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">UNDERSTAND THE LANDSCAPE</p>
+        <h1>Discover the <em>Beauty</em><br>of Earth's Landforms.</h1>
+        <p class="hero-copy">A learning space for students, teachers and curious minds to explore how rivers, ice, wind, waves and Earth's internal forces shape our planet.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#topics">Explore geomorphology <span>↗</span></a><a class="button button-ghost" href="#learning">Learning resources</a></div>
+        <div class="hero-stats"><div><strong>06</strong><span>Core topic guides</span></div><div><strong>Books</strong><span>Recommended reading</span></div><div><strong>Research</strong><span>Discover papers</span></div></div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Illustrated mountain and river landscape">
+        <div class="sun"></div><div class="mountain mountain-back"></div><div class="mountain mountain-front"></div><div class="river"></div>
+        <div class="visual-label"><span class="pulse"></span> Earth is always changing</div>
+      </div>
+    </section>
+
+    <section class="section intro" id="about">
+      <div class="section-heading"><p class="eyebrow">WHAT IS GEOMORPHOLOGY?</p><h2>Read the story written<br>on Earth's surface.</h2></div>
+      <div class="intro-copy"><p>Geomorphology is the scientific study of landforms, the processes that create them, and how landscapes change through time. It connects geology, geography, climate, hydrology and environmental science.</p><p>Choose a topic below to open a dedicated learning page with explanations, key landforms, recommended books, video lectures, image resources and research links.</p></div>
+    </section>
+
+    <section class="section topics-section" id="topics">
+      <div class="section-topline"><div><p class="eyebrow">EXPLORE THE DISCIPLINE</p><h2>Six landscapes. <em>Many stories.</em></h2></div><p class="section-note">Select any topic to explore its dedicated guide.</p></div>
+      <div class="topic-grid">
+        <a class="topic-card topic-fluvial" href="topic.html?topic=fluvial"><span class="topic-number">01 / RIVERS</span><div class="topic-art art-river"><span></span></div><div class="topic-card-body"><h3>Fluvial Geomorphology</h3><p>How flowing water erodes, transports and deposits sediment to shape river landscapes.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+        <a class="topic-card topic-glacial" href="topic.html?topic=glacial"><span class="topic-number">02 / ICE</span><div class="topic-art art-glacier"><span></span></div><div class="topic-card-body"><h3>Glacial Geomorphology</h3><p>Discover how moving ice carves mountains and leaves distinctive deposits behind.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+        <a class="topic-card topic-aeolian" href="topic.html?topic=aeolian"><span class="topic-number">03 / WIND</span><div class="topic-art art-dunes"><span></span></div><div class="topic-card-body"><h3>Aeolian Geomorphology</h3><p>Explore wind erosion, sand transport, dunes and dust deposits in dry environments.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+        <a class="topic-card topic-coastal" href="topic.html?topic=coastal"><span class="topic-number">04 / WAVES</span><div class="topic-art art-coast"><span></span></div><div class="topic-card-body"><h3>Coastal Geomorphology</h3><p>Understand how waves, tides, currents and sea-level change shape coastlines.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+        <a class="topic-card topic-weathering" href="topic.html?topic=weathering"><span class="topic-number">05 / SLOPES</span><div class="topic-art art-slope"><span></span></div><div class="topic-card-body"><h3>Weathering &amp; Mass Movement</h3><p>Learn how rocks break down and how soil and rock move downslope.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+        <a class="topic-card topic-tectonic" href="topic.html?topic=tectonic"><span class="topic-number">06 / EARTH'S INTERIOR</span><div class="topic-art art-tectonic"><span></span></div><div class="topic-card-body"><h3>Tectonic &amp; Volcanic Geomorphology</h3><p>See how uplift, faults, earthquakes and volcanic activity build and reshape terrain.</p><span class="card-link">Explore topic <b>↗</b></span></div></a>
+      </div>
+    </section>
+
+    <section class="resource-band" id="learning"><div><p class="eyebrow">KEEP LEARNING</p><h2>Start with trusted<br>learning resources.</h2><p>Explore university course materials and discover research papers from scholarly search services.</p></div><div class="resource-links"><a href="https://onlinecourses.nptel.ac.in/e-learning/preview/noc22_ce48" target="_blank" rel="noopener">NPTEL / SWAYAM course <span>↗</span></a><a href="https://ocw.mit.edu/courses/12-163-surface-processes-and-landscape-evolution-fall-2004/pages/lecture-notes/" target="_blank" rel="noopener">MIT OpenCourseWare <span>↗</span></a><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar <span>↗</span></a><a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar <span>↗</span></a></div></section>
+  </main>
+  <footer><a class="brand footer-brand" href="index.html"><span class="brand-mark">B<span>G</span></span><span>Beauty of <strong>Geomorphology</strong></span></a><p>Learn the processes. Read the landscape. Explore the evidence.</p><span>Educational resource · 2026</span></footer>
+  <script src="script.js"></script>
 </body>
 </html>

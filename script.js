@@ -1,30 +1,106 @@
-const $ = (id) => document.getElementById(id);
-$("year").textContent = new Date().getFullYear();
-$("menuBtn").addEventListener("click", () => $("nav").classList.toggle("open"));
-document.querySelectorAll("#nav a").forEach(a => a.addEventListener("click", () => $("nav").classList.remove("open")));
-
-const form = $("chatForm"), input = $("question"), messages = $("messages");
-function addMessage(text, type, html = false) {
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  if (html) div.innerHTML = text; else div.textContent = text;
-  messages.appendChild(div); messages.scrollTop = messages.scrollHeight;
+const topicData = {
+fluvial: {
+  name:"Fluvial Geomorphology", eyebrow:"01 / RIVERS & RUNNING WATER",
+  subtitle:"Explore how flowing water, sediment and channel dynamics create valleys, floodplains, meanders and deltas.",
+  overview:[
+    "Fluvial geomorphology is the study of landforms and processes associated with rivers and streams. It examines how water and sediment move through drainage basins and how channels respond to climate, geology, vegetation and human activity.",
+    "The main river processes are erosion, transportation and deposition. Their balance varies with discharge, channel gradient, sediment size, bank material and vegetation. A river is a dynamic system: its shape can change during floods and gradually adjust over much longer periods.",
+    "Students can investigate fluvial systems using field observations, topographic maps, satellite imagery, discharge records, sediment measurements and GIS. Always distinguish a general process explanation from evidence collected at a specific river or study site."
+  ],
+  processes:[["Erosion","Hydraulic action, abrasion and other processes remove material from the bed and banks. Erosion patterns depend on flow energy, rock strength and sediment load."],["Transportation","Rivers carry sediment as dissolved load, suspended load and bed load. Grain size and flow conditions affect how far and how often particles move."],["Deposition","When a river loses transport capacity, sediment may settle to form bars, floodplains, alluvial fans or deltas. Deposition often changes with floods and channel migration."]],
+  landforms:[["V-shaped valley","A narrow valley commonly formed where river incision and slope processes are active."],["Waterfall and gorge","A waterfall may retreat upstream and leave a steep-sided gorge, especially where resistant and weaker rocks occur together."],["Meander","A sinuous channel bend shaped by patterns of erosion and deposition along the banks."],["Oxbow lake","A crescent-shaped water body that may form when a meander neck is cut off."],["Floodplain","A relatively flat valley floor built and modified by overbank flooding and sediment deposition."],["Natural levee","A raised bank beside a channel formed as coarser sediment is deposited during floods."],["Braided channel","A channel divided into multiple shifting threads around sediment bars, often where sediment supply is high."],["River delta","A depositional landform that develops where a river enters a standing body of water and loses transport energy."]],
+  books:[["Fluvial Processes in Geomorphology","Luna B. Leopold, M. Gordon Wolman & John P. Miller","Classic treatment of river flow, sediment and channel form (1964)."],["Fundamentals of Fluvial Geomorphology","Richard J. Charlton","Introductory overview of river processes, forms and landscape evolution (2008)."],["Fluvial Forms and Processes: A New Perspective","Andrew D. Knighton","Detailed reference on channel patterns and fluvial processes (1998, 2nd ed.)."],["Geomorphic Analysis of River Systems","Kirstie A. Fryirs & Gary J. Brierley","River-system analysis and reading landscapes (2013)."]],
+  videos:["fluvial geomorphology university lecture","river erosion transportation deposition landforms lecture","meanders floodplains deltas geomorphology"],
+  images:["meandering river aerial photograph","braided river satellite image","river delta landform","oxbow lake floodplain aerial photograph","river valley waterfall gorge","river cross section erosion deposition diagram"],
+  research:"fluvial geomorphology river channel evolution sediment transport"
+},
+glacial:{
+  name:"Glacial Geomorphology",eyebrow:"02 / ICE & COLD ENVIRONMENTS",
+  subtitle:"Learn how glaciers move, erode bedrock, transport debris and leave distinctive mountain and lowland landforms.",
+  overview:["Glacial geomorphology examines landforms created or modified by glaciers and ice sheets. Moving ice can erode bedrock, carry sediment and deposit unsorted or sorted material as the ice advances, retreats or melts.","Glacial landscapes reflect ice thickness, velocity, temperature, bedrock structure, debris supply and the history of glaciation. Many features are inherited from past climates, so geomorphologists use landforms and sediments to reconstruct former ice extent and movement.","Glacial evidence is studied through field mapping, sediment analysis, aerial photographs, satellite imagery, digital elevation models and dating methods. Some landforms can also be produced by non-glacial processes, so multiple lines of evidence are important."],
+  processes:[["Abrasion","Rock fragments carried at the glacier base scrape and polish bedrock as ice moves."],["Plucking","Ice can freeze onto fractured rock and pull blocks away as the glacier moves."],["Transport and deposition","Glaciers transport debris of many sizes and deposit till, moraines and meltwater sediments as ice melts or retreats."]],
+  landforms:[["U-shaped valley","A broad valley with steep sides and a relatively wide floor shaped by glacial erosion."],["Cirque / corrie","A bowl-shaped hollow near a mountain headwall where glacier ice accumulates."],["Arête and horn","Sharp ridges and pyramidal peaks formed where cirques or glacial valleys erode back into a mountain."],["Moraine","A ridge or spread of debris deposited at the side, front or base of a glacier."],["Drumlin","An elongated hill of glacial sediment or bedrock shaped beneath moving ice."],["Esker","A winding ridge of sand and gravel deposited by meltwater streams flowing within or beneath ice."],["Erratic","A boulder transported from its source by ice and deposited elsewhere."],["Fjord","A deep, steep-sided glacial valley flooded by the sea."]],
+  books:[["Glacial Geology: Ice Sheets and Landforms","Matthew R. Bennett & Neil F. Glasser","Useful introduction to glacial systems and landforms."],["Glaciers and Glaciation","Douglas I. Benn & David J. A. Evans","Comprehensive reference on glacier processes, sediments and landscapes."],["The Ice Age World","Various academic authors / course texts","Use university library catalogues to locate current glacial geomorphology texts and editions."],["Geomorphology: The Mechanics and Chemistry of Landscapes","Robert S. Anderson & Suzanne P. Anderson","Explains landscape evolution, including erosion and sediment transport processes."]],
+  videos:["glacial geomorphology university lecture","glacial erosional depositional landforms moraines drumlins","glacier movement abrasion plucking educational lecture"],
+  images:["U shaped glacial valley photograph","glacial moraine aerial image","drumlin field landscape","fjord aerial photograph","glacial cirque mountain","glacial landforms labelled diagram"],
+  research:"glacial geomorphology glacier landforms moraine ice sheet"
+},
+aeolian:{
+  name:"Aeolian Geomorphology",eyebrow:"03 / WIND & DRYLANDS",
+  subtitle:"Explore how wind erodes surfaces, transports sand and dust, and builds dunes and loess landscapes.",
+  overview:["Aeolian geomorphology studies landforms and sediment movement caused by wind. It is especially important in deserts and semi-arid regions, but wind also reshapes beaches, agricultural fields and other landscapes where loose sediment is exposed.","Wind moves sediment by suspension, saltation (short hops) and surface creep. Deflation removes loose particles, while abrasion occurs when wind-blown grains strike rock. The resulting landforms depend on wind direction and strength, sediment supply, surface moisture and vegetation.","Dunes are not simply piles of sand: their shape and movement can provide clues about wind regime and sediment availability. Field observations and satellite images are useful for mapping dune migration and dust-source areas."],
+  processes:[["Deflation","Wind removes loose particles from the ground, sometimes leaving a coarse surface lag."],["Abrasion","Wind-driven sand grains wear down exposed rock and can create polished or sculpted surfaces."],["Saltation and deposition","Sand grains bounce along the surface; where wind energy falls, sand may accumulate and form dunes."]],
+  landforms:[["Barchan dune","Crescent-shaped dune commonly associated with a limited sand supply and a dominant wind direction."],["Transverse dunes","Ridges that tend to lie across the prevailing wind direction where sand supply is abundant."],["Longitudinal dune","Elongated ridge broadly aligned with resultant wind direction."],["Star dune","High dune with several arms associated with variable wind directions."],["Loess deposit","Wind-blown silt that can form extensive deposits and fertile soils."],["Deflation hollow","A depression formed as wind removes loose sediment."],["Yardang","An elongated ridge carved by wind abrasion and deflation in some arid regions."],["Desert pavement","A surface layer of coarse stones left after finer material is removed or redistributed."]],
+  books:[["Aeolian Geomorphology","Ronald U. Cooke, Andrew Warren & Andrew Goudie","Classic reference on wind processes and landforms."],["Geomorphology: The Mechanics and Chemistry of Landscapes","Robert S. Anderson & Suzanne P. Anderson","Provides physical principles useful for understanding sediment transport."],["Fundamentals of Geomorphology","Richard J. Huggett","Broad textbook covering landforms and surface processes."],["The Physics of Blown Sand and Desert Dunes","Ralph A. Bagnold","Foundational work on wind-blown sand and dune dynamics (1941)."]],
+  videos:["aeolian geomorphology dunes university lecture","types of sand dunes barchan transverse longitudinal star dune","wind erosion transportation deposition landforms lecture"],
+  images:["barchan sand dune photograph","star dunes satellite image","loess plateau landscape","yardang desert landform","desert pavement photograph","sand dune types labelled diagram"],
+  research:"aeolian geomorphology sand dune migration wind sediment"
+},
+coastal:{
+  name:"Coastal Geomorphology",eyebrow:"04 / WAVES, TIDES & SHORELINES",
+  subtitle:"Understand how waves, tides, currents, sediment and sea-level change create and modify coastal landscapes.",
+  overview:["Coastal geomorphology studies the shape and evolution of shorelines and the processes operating where land meets the sea. Waves, tides, currents, storms, sediment supply, geology and relative sea-level change all influence coastal form.","Erosional coasts may develop cliffs, wave-cut platforms, caves and arches. Depositional coasts may contain beaches, spits, bars, barrier islands and dunes. Many coastlines shift between erosion and deposition over seasonal and longer time scales.","Coastal change can be monitored using field profiles, historical maps, aerial photographs, satellite imagery and shoreline-change analysis in GIS. A shoreline position is sensitive to tides and season, so comparisons should use consistent methods and record uncertainty."],
+  processes:[["Wave erosion","Wave impact, pressure in rock cracks and abrasion by sediment can wear away cliffs and shore platforms."],["Longshore drift","Waves approaching at an angle move sediment along the coast, helping build or reshape beaches and spits."],["Sea-level and storm impacts","Relative sea-level change, storm surges and changing sediment supply can shift shorelines and alter coastal risk."]],
+  landforms:[["Sea cliff","A steep coastal slope formed or modified by wave erosion and slope failure."],["Wave-cut platform","A gently sloping rock surface exposed as a cliff retreats."],["Sea cave, arch and stack","Features that may form in sequence as waves exploit weaknesses in coastal rock."],["Spit","A narrow ridge of sediment extending from a coast, often shaped by longshore drift."],["Barrier island","A long, narrow coastal island separated from the mainland by a lagoon or bay."],["Tombolo","A sediment bar connecting an island to the mainland or another island."],["Beach and berm","A sediment accumulation shaped by waves, tides and changing water levels."],["Delta and estuary","River-mouth environments influenced by sediment supply, tides, waves and currents."]],
+  books:[["Coastal Geomorphology: An Introduction","Eric C. F. Bird","Broad introduction to coastal landforms and processes."],["Coastal Systems","Various academic authors / coastal science texts","Use a university library catalogue to locate current editions on coastal processes and management."],["Geomorphology: A Systematic Analysis of Late Cenozoic Landforms","A. L. Bloom","A broad landform reference with coastal examples."],["The Environment of the Earth's Surface","MIT OpenCourseWare course materials","Free lecture notes covering coasts and other surface environments."]],
+  videos:["coastal geomorphology university lecture","longshore drift spits bars coastal landforms lecture","wave erosion sea caves arches stacks educational video"],
+  images:["sea cliff wave cut platform photograph","coastal spit aerial photograph","barrier island satellite image","sea arch stack coastal landscape","beach profile diagram","coastal erosion shoreline change satellite image"],
+  research:"coastal geomorphology shoreline change sea level rise erosion"
+},
+weathering:{
+  name:"Weathering & Mass Movement",eyebrow:"05 / ROCK BREAKDOWN & SLOPES",
+  subtitle:"Explore how rocks decompose and disintegrate, and how gravity moves soil, debris and rock downslope.",
+  overview:["Weathering is the breakdown or alteration of rock at or near Earth's surface. Physical weathering fragments rock, chemical weathering changes minerals, and biological activity can contribute to both. Weathering supplies material that can later be transported by water, wind, ice or gravity.","Mass movement, also called mass wasting, is the downslope movement of rock, soil or debris under gravity. It includes slow processes such as soil creep and rapid events such as rockfalls, debris flows and landslides. Water content, slope angle, geology, vegetation, earthquakes and land use can influence slope stability.","Slope studies combine field mapping, rainfall and groundwater information, geological observations, historical records, remote sensing and terrain analysis. A map of steep slopes alone does not prove a landslide will occur; hazard assessment needs evidence about material, triggers and past events."],
+  processes:[["Physical weathering","Temperature changes, frost action, salt growth and unloading can fracture or disaggregate rock."],["Chemical and biological weathering","Minerals may dissolve, oxidise or react with water and acids; roots and organisms can also weaken rock."],["Gravity-driven movement","Material moves downslope as falls, slides, flows or slow creep. Water often changes the strength and weight of slope material."]],
+  landforms:[["Talus / scree slope","A pile of angular rock fragments accumulated below a steep rock face."],["Landslide scar","A source area where material detached and moved downslope."],["Debris-flow fan","A fan-shaped deposit formed where a sediment-rich flow spreads and loses energy."],["Slump scar","A curved head scarp associated with rotational movement of slope material."],["Solifluction lobe","A tongue-like feature formed by slow downslope movement of water-saturated soil in cold environments."],["Weathering profile","A vertical sequence showing alteration from relatively fresh bedrock to weathered material."],["Cave and karst hollow","In soluble rocks, chemical dissolution can form caves, sinkholes and underground drainage."],["Pediment / erosion surface","A gently sloping rock surface that can develop through combined weathering and erosion processes."]],
+  books:[["Geomorphology: The Mechanics and Chemistry of Landscapes","Robert S. Anderson & Suzanne P. Anderson","Explains physical and chemical mechanisms behind landscape change."],["Landslides: Investigation and Mitigation","Edited by A. Keith Turner & Robert L. Schuster","Technical reference on landslide processes and assessment."],["Fundamentals of Geomorphology","Richard J. Huggett","Broad textbook covering weathering, slopes and mass movement."],["Soils and Geomorphology","Peter W. Birkeland","Explores links among soil development, weathering and landscapes."]],
+  videos:["weathering and mass movement geomorphology lecture","types of landslides rockfall slump debris flow educational","physical chemical biological weathering geography lecture"],
+  images:["rockfall talus slope photograph","landslide scar aerial photograph","debris flow fan landscape","physical chemical weathering diagram","soil creep slope features diagram","landslide before after satellite imagery"],
+  research:"slope stability landslide geomorphology weathering mass movement"
+},
+tectonic:{
+  name:"Tectonic & Volcanic Geomorphology",eyebrow:"06 / UPLIFT, FAULTS & VOLCANOES",
+  subtitle:"Investigate how plate movement, crustal uplift, faulting and volcanic activity shape mountains and volcanic landscapes.",
+  overview:["Tectonic geomorphology investigates how deformation of Earth's crust influences landforms, drainage networks and landscape evolution. Uplift, subsidence, folding and fault movement can alter relief and change how rivers erode and deposit sediment.","Volcanic geomorphology focuses on landforms created by eruptions and volcanic processes, including cones, lava flows, calderas and volcanic plateaus. The shape of a volcanic landscape depends on magma composition, eruption style, lava viscosity, climate and later erosion.","Geomorphologists combine field mapping, geological structure, elevation models, satellite imagery, earthquake records and geochronology to identify active processes and reconstruct landscape history. A landform may reflect several episodes of tectonics, volcanism and erosion."],
+  processes:[["Uplift and deformation","Crustal movement raises or tilts terrain, changes river gradients and can influence incision and drainage patterns."],["Faulting and earthquakes","Displacement along faults can create scarps, offset streams, linear valleys and other structural landforms."],["Volcanism and erosion","Lava, ash and volcanic debris build new landforms that are later reshaped by weathering, rivers, glaciers and mass movement."]],
+  landforms:[["Fault scarp","A slope or step associated with displacement along a fault, though erosion can also create similar forms."],["Rift valley","A long depression associated with extension and fault-bounded subsidence."],["Fold mountains","Mountain belts formed by compression, folding and crustal thickening."],["Volcanic cone","A cone-shaped edifice built from lava, ash and other erupted material."],["Caldera","A large volcanic depression commonly formed by collapse after substantial magma withdrawal."],["Lava plateau","An extensive elevated surface built by repeated flows of relatively fluid lava."],["Lava dome","A steep-sided mound formed by the extrusion of viscous lava."],["Incised river terrace","A former valley-floor or floodplain surface left above the modern river as incision or changes in sediment supply occur."]],
+  books:[["Tectonic Geomorphology","Douglas W. Burbank & Robert S. Anderson","Reference on landforms, tectonics and methods for investigating active deformation."],["Volcanoes and the Environment","Various academic authors / volcanic geomorphology texts","Look for current university texts on volcanic processes, hazards and landforms."],["Geomorphology: The Mechanics and Chemistry of Landscapes","Robert S. Anderson & Suzanne P. Anderson","Explains interactions among tectonics, erosion and landscape evolution."],["Fundamentals of Geomorphology","Richard J. Huggett","Broad overview of tectonic, volcanic and surface processes."]],
+  videos:["tectonic geomorphology university lecture","volcanic landforms caldera lava dome plateau lecture","fault scarps uplift river incision tectonic geomorphology"],
+  images:["volcanic cone aerial photograph","caldera satellite image","fault scarp landscape photograph","rift valley satellite imagery","lava plateau photograph","tectonic geomorphology labelled diagram"],
+  research:"tectonic geomorphology active faults uplift volcano landforms"
 }
-function safeQuery(q) { return encodeURIComponent(q); }
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const q = input.value.trim();
-  if (!q) return;
-  addMessage(q, "user");
-  input.value = "";
-  const encoded = safeQuery(q + " geomorphology");
-  const w = "https://en.wikipedia.org/w/index.php?search=" + encoded;
-  const s = "https://www.semanticscholar.org/search?q=" + encoded;
-  const c = "https://search.crossref.org/?q=" + encoded;
-  const html = "This starter version can find research starting points, but it does not yet generate an AI-written answer. For your question, try these source searches:<br><br>" +
-    "• <a href=\"" + w + "\" target=\"_blank\" rel=\"noopener\">Search Wikipedia ↗</a><br>" +
-    "• <a href=\"" + s + "\" target=\"_blank\" rel=\"noopener\">Search Semantic Scholar ↗</a><br>" +
-    "• <a href=\"" + c + "\" target=\"_blank\" rel=\"noopener\">Search Crossref publications ↗</a><br><br>" +
-    "When we connect a secure backend and AI provider, this chatbot can retrieve source material and compose a cited explanation. Please verify claims against the original sources.";
-  addMessage(html, "bot", true);
-});
+};
+
+const $ = (id) => document.getElementById(id);
+function safeLink(url){return url;}
+function renderTopic(){
+  const params = new URLSearchParams(location.search);
+  const key = params.get("topic") || "fluvial";
+  const t = topicData[key] || topicData.fluvial;
+  document.title = `${t.name} | Beauty of Geomorphology`;
+  $("topicEyebrow").textContent = t.eyebrow;
+  $("topicTitle").textContent = t.name;
+  $("topicSubtitle").textContent = t.subtitle;
+  $("scholarTop").href = "https://scholar.google.com/scholar?q="+encodeURIComponent(t.research);
+  $("topicOverview").innerHTML = t.overview.map(p=>`<p>${p}</p>`).join("");
+  $("processGrid").innerHTML = t.processes.map((p,i)=>`<article class="info-card"><span class="mini-number">PROCESS 0${i+1}</span><h3>${p[0]}</h3><p>${p[1]}</p></article>`).join("");
+  $("landformGrid").innerHTML = t.landforms.map((p,i)=>`<article class="landform-card"><h3>${p[0]}</h3><p>${p[1]}</p></article>`).join("");
+  $("bookList").innerHTML = t.books.map((b)=>`<article class="book-card"><div class="book-icon">B</div><div><h3>${b[0]}</h3><p class="book-author">${b[1]}</p><p>${b[2]}</p></div></article>`).join("");
+  $("videoGrid").innerHTML = t.videos.map((v,i)=>`<article class="video-card"><div class="video-symbol">▶</div><h3>${v.replace(/\b\w/g,c=>c.toUpperCase())}</h3><p>Search YouTube for relevant lectures and educational explanations.</p><a class="text-link" href="https://www.youtube.com/results?search_query=${encodeURIComponent(v)}" target="_blank" rel="noopener">Find videos ↗</a></article>`).join("");
+  $("imageGrid").innerHTML = t.images.map((v,i)=>`<article class="image-card"><div class="image-swatch" aria-hidden="true"></div><h3>${v.replace(/\b\w/g,c=>c.toUpperCase())}</h3><p>Find photographs, maps or diagrams and check the reuse licence.</p><a class="text-link" href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=${encodeURIComponent(v)}" target="_blank" rel="noopener">Explore images ↗</a></article>`).join("");
+  const q = encodeURIComponent(t.research);
+  const resources = [
+    ["Google Scholar","Search academic literature, theses and citations.","https://scholar.google.com/scholar?q="+q],
+    ["Semantic Scholar","Discover papers and related academic work.","https://www.semanticscholar.org/search?q="+q],
+    ["Crossref","Look up scholarly publication metadata and DOI records.","https://search.crossref.org/?q="+q],
+    ["OpenAlex","Explore scholarly works, authors and research topics.","https://openalex.org/works?search="+q],
+    ["NPTEL / SWAYAM","Explore the course Geomorphic Processes: Landforms and Landscapes.","https://onlinecourses.nptel.ac.in/e-learning/preview/noc22_ce48"],
+    ["MIT OpenCourseWare","Open university lecture notes on surface processes and landscape evolution.","https://ocw.mit.edu/courses/12-163-surface-processes-and-landscape-evolution-fall-2004/pages/lecture-notes/"]
+  ];
+  $("researchGrid").innerHTML = resources.map(r=>`<article class="research-card"><h3>${r[0]}</h3><p>${r[1]}</p><a class="text-link" href="${safeLink(r[2])}" target="_blank" rel="noopener">Open resource ↗</a></article>`).join("");
+  const art = $("topicArt");
+  art.className = "topic-hero-art art-"+(key==="weathering"?"slope":key==="tectonic"?"tectonic":key==="glacial"?"glacier":key==="aeolian"?"dunes":key==="coastal"?"coast":"river");
+}
+if(document.getElementById("topicPage")) renderTopic();
+const toggle = document.getElementById("menuToggle");
+if(toggle) toggle.addEventListener("click",()=>document.getElementById("mainNav").classList.toggle("open"));
